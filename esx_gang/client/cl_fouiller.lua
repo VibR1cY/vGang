@@ -33,14 +33,10 @@ function menuGangFouiller(gangSelected)
 
                         if closestPlayer ~= -1 and closestDistance < 3 then
                             local valueRecupMoney = TextInfo("Montant ?", "", 20, false)
-                            if valueRecupMoney == nil then
-                                if v.amount >= valueRecupMoney then
-                                    TriggerServerEvent("esx_gang:PlayerSelected", GetPlayerServerId(closestPlayer), "item_account", v.value, tonumber(valueRecupMoney))
-                                else
-                                    ESX.ShowNotification('~g~Quantité invalide')
-                                end
+                            if v.amount >= tonumber(valueRecupMoney) then
+                                TriggerServerEvent("esx_gang:PlayerSelected", GetPlayerServerId(closestPlayer), "item_account", v.value, tonumber(valueRecupMoney))
                             else
-                                ESX.ShowNotification("Merci de rentrer un montant !")
+                                ESX.ShowNotification('~g~Quantité invalide')
                             end
                         end
                         RageUI.GoBack()
@@ -49,20 +45,16 @@ function menuGangFouiller(gangSelected)
             end
             RageUI.Separator("↓ ~g~Objets ~s~↓")
             for k,v in pairs(Items) do
-                RageUI.Button((" ~r~> ~s~%S"):format(v.label), nil, { RightLabel = ("x [~r~%s~s~]"):format(v.right) }, true, {
+                RageUI.Button((" ~r~> ~s~%s"):format(v.label), nil, { RightLabel = ("x [~r~%s ~s~]"):format(v.right) }, true, {
                     onSelected = function()
                         local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
 
                         if closestPlayer ~= -1 and closestDistance < 3 then
                             local valueRecupItem = TextInfo("Montant ?", "", 20, false)
-                            if valueRecupItem == nil then
-                                if v.amount >= valueRecupItem then
-                                    TriggerServerEvent("esx_gang:PlayerSelected", GetPlayerServerId(closestPlayer), "item_standard", v.value, tonumber(valueRecupItem))
-                                else
-                                    ESX.ShowNotification('~g~Quantité invalide')
-                                end
+                            if v.amount >= tonumber(valueRecupItem) then
+                                TriggerServerEvent("esx_gang:PlayerSelected", GetPlayerServerId(closestPlayer), "item_standard", v.value, tonumber(valueRecupItem))
                             else
-                                ESX.ShowNotification("Merci de rentrer un montant !")
+                                ESX.ShowNotification('~g~Quantité invalide')
                             end
                         end
                         RageUI.GoBack()
