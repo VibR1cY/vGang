@@ -1,9 +1,10 @@
 ESX_GANG : 
   - Garage (avec stock de véhicule)
   - Action Patron
-  - Coffre
+  - Coffre (item, arme)
   - Menu Fouille 
   - Blips
+  - Vestiaire
 
 Ce script et sous la version de RageUI V2
 
