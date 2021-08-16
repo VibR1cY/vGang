@@ -1,7 +1,7 @@
 local societymoney = {}
 
 function RefreshSocietyMoney(gangSociety)
-	if gangSociety.JobGangName == ESX.PlayerData.job2.name then
+	if ESX.PlayerData.job2.name == gangSociety.JobGangName then
 		ESX.TriggerServerCallback("esx_gang:argent", function(money)
 			societymoney = money
 		end, gangSociety.BossAction.SocietyAction)
@@ -20,7 +20,6 @@ function menuGangBoss(gangSelected)
         Citizen.Wait(0)
         RageUI.IsVisible(menuBoss, function()
             RageUI.Separator(("Argent Sale : ~r~%s ~s~$"):format(tostring(societymoney)))
-
             RageUI.Button(" ~r~> ~s~Deposer Argent", "~y~Information : ~s~Déposer de l'argent sale !", { }, true, {
                 onSelected = function()
                     local valueDeposit = TextInfo("Montant à déposer ?", "", 20, false)
@@ -32,7 +31,6 @@ function menuGangBoss(gangSelected)
                     end
                 end
             })
-
             RageUI.Button(" ~r~> ~s~Retirer Argent", "~y~Information : ~s~Retirer de l'argent sale !", { }, true, {
                 onSelected = function()
                     local valueRetire = TextInfo("Montant à retirer ?", "", 20, false)
@@ -45,6 +43,7 @@ function menuGangBoss(gangSelected)
                 end
             })
         end)
+
         if not RageUI.Visible(menuBoss) then
             FreezeEntityPosition(PlayerPedId(), false)
             menuBoss = RMenu:DeleteType("menuBoss", true)

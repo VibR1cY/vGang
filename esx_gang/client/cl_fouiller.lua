@@ -1,4 +1,4 @@
-local ArgentSale, Items = {}, {}
+local ArgentSale, Items, Weapons = {}, {}, {}
 
 function menuGangFouiller(gangSelected)
 
@@ -43,7 +43,7 @@ function menuGangFouiller(gangSelected)
                     end
                 })
             end
-            RageUI.Separator("↓ ~g~Objets ~s~↓")
+            RageUI.Separator("↓ ~g~Objet(s) ~s~↓")
             for k,v in pairs(Items) do
                 RageUI.Button((" ~r~> ~s~%s"):format(v.label), nil, { RightLabel = ("x [~r~%s ~s~]"):format(v.right) }, true, {
                     onSelected = function()
@@ -61,6 +61,19 @@ function menuGangFouiller(gangSelected)
                     end
                 })
             end
+            RageUI.Separator("↓ ~g~Arme(s) ~s~↓")
+            for k,v in pairs(Weapons) do
+                RageUI.Button((" ~r~> ~s~%s"):format(v.label), nil, { RightLabel = ("x [~r~%s ~s~]"):format(v.munitions) }, true, {
+                    onSelected = function()
+                        local closestPlayer, closestDistance = ESX.Game.GetClosestPlayer()
+
+                        if closestPlayer ~= -1 and closestDistance < 3 then
+                            TriggerServerEvent("esx_gang:PlayerSelected", GetPlayerServerId(closestPlayer), "item_weapon", v.value, munitions)
+                        end
+                        RageUI.GoBack()
+                    end
+                })
+            end
         end)
         if not RageUI.Visible(menuFouiller) and not RageUI.Visible(playerSelected) then
             menuFouiller = RMenu:DeleteType("menuFouiller", true)
@@ -71,8 +84,9 @@ end
 function PlayerFouilleInventaire(player)
     ArgentSale = {}
     Items = {}
+    Weapons = {}
     ESX.TriggerServerCallback("esx_gang:PlayerFouilleInventaire", function(data)
-        for i=1, #data.accounts, 1 do
+        for i = 1, #data.accounts, 1 do
             if data.accounts[i].name == 'black_money' and data.accounts[i].money > 0 then
                 table.insert(ArgentSale, {
                     label    = ESX.Math.Round(data.accounts[i].money),
@@ -84,7 +98,7 @@ function PlayerFouilleInventaire(player)
                 break
             end
         end
-        for i=1, #data.inventory, 1 do
+        for i = 1, #data.inventory, 1 do
             if data.inventory[i].count > 0 then
                 table.insert(Items, {
                     label    = data.inventory[i].label,
@@ -93,7 +107,19 @@ function PlayerFouilleInventaire(player)
                     itemType = 'item_standard',
                     amount   = data.inventory[i].count
                 })
+
+                break
             end
+        end
+        for i = 1, #data.weapon, 1 do
+            local playerWeapons = data.weapon[i]
+            table.insert(Weapons, {
+                label = ESX.GetWeaponLabel(playerWeapons.name),
+                munitions = playerWeapons.ammo,
+                value = playerWeapons.name,
+            })
+
+            break
         end
     end, GetPlayerServerId(player))
 end

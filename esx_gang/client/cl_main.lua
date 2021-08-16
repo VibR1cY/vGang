@@ -129,6 +129,9 @@ function InitMarkerJob()
             end
         end
     end)
+    for _,v in pairs(Gang) do
+        print("^1[ESX GANG]^7 "..v.GangName.." Chargé avec succès !")
+    end
 end
 
 function InitBlips()
