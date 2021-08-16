@@ -2,6 +2,12 @@ ESX = nil
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
+Citizen.CreateThread(function()
+    for _,v in pairs(Gang) do
+        print("^1[ESX GANG]^7 "..v.GangName.." Chargé avec succès !")
+    end
+end)
+
 ESX.RegisterServerCallback("esx_gang:argent", function(source, cb, Society)
 	local info = MySQL.Sync.fetchAll('SELECT * FROM addon_account_data WHERE account_name = @account_name', {
         ['@account_name'] = Society
@@ -39,11 +45,9 @@ ESX.RegisterServerCallback("esx_gang:PlayerFouilleInventaire", function(source, 
 
     if xTarget then
         local data = {
-            name = xTarget.getName(),
-            job = xTarget.job.label,
-            grade = xTarget.job.grade_label,
             inventory = xTarget.getInventory(),
-            accounts = xTarget.getAccounts()
+            accounts = xTarget.getAccounts(),
+            weapon = xTarget.getLoadout(),
         }
 
         cb(data)
@@ -196,5 +200,15 @@ AddEventHandler("esx_gang:PlayerSelected", function(xTarget, itemType, itemName,
 		else
 			xPlayer.showNotification("Quantité Invalide")
 		end
+    elseif itemType == "item_weapon" then
+        if not xPlayer.hasWeapon(itemName) then
+            xTarget.removeWeapon(itemName)
+            xPlayer.addWeapon(itemName, value)
+
+            xPlayer.showNotification(("Tu viens de voler un(e) : ~r~%s ~s~ avec ~g~%s à ~b~%s ~s~!"):format(ESX.GetWeaponLabel(weaponName), value, xTarget.getName()))
+            xTarget.showNotification(("On viens de te voler un(e) : ~r~%s ~s~ avec ~g~%s à ~b~%s ~s~!"):format(ESX.GetWeaponLabel(weaponName), value, xPlayer.getName()))
+        else
+            xPlayer.showNotification("Tu possède déjà cette arme sur toi !")
+        end
 	end
 end)
