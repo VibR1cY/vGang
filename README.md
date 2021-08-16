@@ -2,7 +2,7 @@ ESX_GANG :
   - Garage (avec stock de véhicule par joueur)
   - Action Patron
   - Coffre (Item, Arme)
-  - Menu Fouille 
+  - Menu Fouille (Prendre Item, Argent Sale, Arme)
   - Blips
   - Vestiaire
 
