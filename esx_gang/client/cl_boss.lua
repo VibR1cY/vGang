@@ -22,9 +22,9 @@ function menuGangBoss(gangSelected)
             RageUI.Separator(("Argent Sale : ~r~%s ~s~$"):format(tostring(societymoney)))
             RageUI.Button(" ~r~> ~s~Deposer Argent", "~y~Information : ~s~Déposer de l'argent sale !", { }, true, {
                 onSelected = function()
-                    local valueDeposit = TextInfo("Montant à déposer ?", "", 20, false)
+                    local valueDeposit = tonumber(TextInfo("Montant à déposer ?", "", 20, false))
                     if valueDeposit ~= nil then
-                        TriggerServerEvent("esx_gang:deposerargent", gangSelected, tonumber(valueDeposit))
+                        TriggerServerEvent("esx_gang:deposerargent", gangSelected, valueDeposit)
                         RefreshSocietyMoney(gangSelected)
                     else
                         ESX.ShowNotification("Merci de rentrer un montant de dépot !")
@@ -33,9 +33,9 @@ function menuGangBoss(gangSelected)
             })
             RageUI.Button(" ~r~> ~s~Retirer Argent", "~y~Information : ~s~Retirer de l'argent sale !", { }, true, {
                 onSelected = function()
-                    local valueRetire = TextInfo("Montant à retirer ?", "", 20, false)
+                    local valueRetire = tonumber(TextInfo("Montant à retirer ?", "", 20, false))
                     if valueRetire ~= nil then
-                        TriggerServerEvent("esx_gang:retirerargent", gangSelected, tonumber(valueRetire))
+                        TriggerServerEvent("esx_gang:retirerargent", gangSelected, valueRetire)
                         RefreshSocietyMoney(gangSelected)
                     else
                         ESX.ShowNotification("Merci de rentrer un montant de retrait !")
