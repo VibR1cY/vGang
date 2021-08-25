@@ -8,7 +8,7 @@ function openCoffreMenu(coffreGang)
     local menuCoffre = RageUI.CreateMenu("Coffre", ("Gang : %s"):format(coffreGang.JobGangName), nil, nil, nil, nil, 255, 0, 0, 0);
     local deposerItem = RageUI.CreateSubMenu(menuCoffre,"Mes Items", ("Gang : %s"):format(coffreGang.JobGangName));
     local prendreItem = RageUI.CreateSubMenu(menuCoffre,"Items Coffre", ("Gang : %s"):format(coffreGang.JobGangName));
-    local deposerWeapon = RageUI.CreateSubMenu(menuCoffre,"Armes Coffre", ("Gang : %s"):format(coffreGang.JobGangName));
+    local deposerWeapon = RageUI.CreateSubMenu(menuCoffre,"Mes Armes", ("Gang : %s"):format(coffreGang.JobGangName));
     local prendreWeapon = RageUI.CreateSubMenu(menuCoffre,"Armes Coffre", ("Gang : %s"):format(coffreGang.JobGangName));
 
     RageUI.Visible(menuCoffre, not RageUI.Visible(menuCoffre))
