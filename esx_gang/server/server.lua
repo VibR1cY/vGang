@@ -9,10 +9,9 @@ Citizen.CreateThread(function()
 end)
 
 ESX.RegisterServerCallback("esx_gang:argent", function(source, cb, Society)
-	local info = MySQL.Sync.fetchAll('SELECT * FROM addon_account_data WHERE account_name = @account_name', {
-        ['@account_name'] = Society
-    })
-    cb(info[1].money)
+    TriggerEvent('esx_addonaccount:getSharedAccount', Society, function(account)
+        cb(account.money)
+    end)
 end)
 
 ESX.RegisterServerCallback("esx_gang:PlayerInventaire", function(source, cb)
