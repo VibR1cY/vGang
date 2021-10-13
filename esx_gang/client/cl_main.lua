@@ -124,7 +124,7 @@ function InitMarkerJob()
             if not InZone then
                 Wait(500)
             else
-                Wait(1)
+                Wait(0)
             end
         end
     end)
