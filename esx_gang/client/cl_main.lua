@@ -4,9 +4,8 @@ ESX = nil
 local StartJob = false
 
 Citizen.CreateThread(function()
-
+    TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
     while ESX == nil do
-        TriggerEvent("esx:getSharedObject", function(obj) ESX = obj end)
         Citizen.Wait(10)
     end
 
