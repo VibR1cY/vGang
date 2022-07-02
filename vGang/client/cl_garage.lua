@@ -17,11 +17,12 @@ function openGarageMenu(garageGang)
                             v.stock = v.stock - 1
                             local coords = GetEntityCoords(PlayerPedId())
                             local heading = GetEntityHeading(PlayerPedId())
-                            local hashCar = RequestModel(GetHashKey(v.label))
-                            while not HasModelLoaded(hashCar) do
+                            local vehicleHash = GetHashKey(v.label)
+                            RequestModel(vehicleHash)
+                            while not HasModelLoaded(vehicleHash) do
                                 Citizen.Wait(0)
                             end
-                            local Vehicule = CreateVehicle(hashCar, coords.x, coords.y, coords.z, heading, true, true)
+                            local Vehicule = CreateVehicle(vehicleHash, coords.x, coords.y, coords.z, heading, true, true)
                             TaskWarpPedIntoVehicle(PlayerPedId(), Vehicule, -1)
                             local r,g,b = table.unpack(v.color)
                             SetVehicleCustomPrimaryColour(Vehicule, r,g,b)
